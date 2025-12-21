@@ -31,6 +31,26 @@ app.use("/project", projectRouter);
 app.use("/edu", eduRoutes);
 app.use("/profile", profileRouter);
 
+// Root route
+app.get("/", (req, res) => {
+    res.status(200).json({
+        message: "Portfolio API is running successfully!",
+        endpoints: {
+            auth: {
+                signup: "POST /signup",
+                login: "POST /login", 
+                reset: "POST /reset"
+            },
+            data: {
+                skills: "GET/POST /skill",
+                projects: "GET/POST /project",
+                education: "GET/POST /edu",
+                profile: "GET/POST /profile"
+            }
+        }
+    });
+});
+
 // ye reset password ke liye (U)
 app.post("/reset", async(req,res)=>{
     const {email, name, secret, password, image, about, mobile, location } = req.body;
@@ -179,6 +199,7 @@ app.use("/", (req, res, next)=>{
 });
 
 // always listening on its port
-app.listen(process.env.PORT, (req, res)=>{
-    console.log(`App is listening on port : ${process.env.PORT}`);
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, (req, res)=>{
+    console.log(`App is listening on port : ${PORT}`);
 });
